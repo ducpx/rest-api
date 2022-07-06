@@ -1,0 +1,14 @@
+server:
+  AppVersion: 1.0.0
+  Port: :5000
+  Mode: Development
+  JwtSecretKey: secret
+  CtxDefaultTimeout: 12
+  Debug: false
+
+logger:
+  Development: true
+  DisableCaller: false
+  DisableStacktrace: true
+  Encoding: console
+  Level: debug
