@@ -1,15 +1,32 @@
 version: "3.8"
 
 services:
-  web:
-    container_name: rest-api
-    build:
-      context: .
-      dockerfile: docker/Dockerfile
+  # web:
+  #   container_name: rest-api
+  #   build:
+  #     context: .
+  #     dockerfile: docker/Dockerfile
+  #   ports:
+  #     - "5000:5000"
+  # volumes:
+  #   - ./:/app
+  jaeger:
+    container_name: jaeger_container
+    # restart: always
+    image: jaegertracing/all-in-one:latest
+    environment:
+      - COLLECTOR_ZIPKIN_HTTP_PORT=9411
     ports:
-      - "5000:5000"
-    # volumes:
-    #   - ./:/app
+      - 5775:5775/udp
+      - 6831:6831/udp
+      - 6832:6832/udp
+      - 5778:5778
+      - 16686:16686
+      - 14268:14268
+      - 14250:14250
+      - 9411:9411
+    networks:
+      - web_api
 
 networks:
   web_api:
