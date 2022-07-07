@@ -20,6 +20,7 @@ func (s *Server) MapHandlers(e *echo.Echo) error {
 		s.cfg.Metrics.URL, s.cfg.Metrics.ServiceName,
 	)
 	mw := appMiddleware.NewMiddlewareManager(s.cfg, s.logger)
+	e.Use(mw.RequestLoggerMiddleware)
 	e.Use(middleware.RequestID())
 	e.Use(mw.MetricsMiddleware(metr))
 

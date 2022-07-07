@@ -6,3 +6,7 @@ Template REST api
 ```bash
 $ make local
 ```
+
+## Frame get health
+
+## Collect metrics
