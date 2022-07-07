@@ -12,3 +12,7 @@ logger:
   DisableStacktrace: true
   Encoding: console
   Level: debug
+
+metrics:
+  URL: 0.0.0.0:7070
+  ServiceName: api

@@ -9,8 +9,9 @@ import (
 )
 
 type Config struct {
-	Server ServerConfig
-	Logger Logger
+	Server  ServerConfig
+	Metrics Metrics
+	Logger  Logger
 }
 
 // Server config
@@ -23,6 +24,12 @@ type ServerConfig struct {
 	WriteTimeout      time.Duration
 	CtxDefaultTimeout time.Duration
 	Debug             bool
+}
+
+// Metrics config
+type Metrics struct {
+	URL         string
+	ServiceName string
 }
 
 // Logger config
