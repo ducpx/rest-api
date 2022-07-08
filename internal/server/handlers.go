@@ -3,6 +3,7 @@ package server
 import (
 	"net/http"
 
+	_ "github.com/ducpx/rest-api/docs"
 	authHTTP "github.com/ducpx/rest-api/internal/auth/delivery/http"
 	appMiddleware "github.com/ducpx/rest-api/internal/middleware"
 	"github.com/ducpx/rest-api/pkg/metric"
@@ -10,6 +11,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	echoSwagger "github.com/swaggo/echo-swagger"
 )
 
 func (s *Server) MapHandlers(e *echo.Echo) error {
@@ -29,6 +31,7 @@ func (s *Server) MapHandlers(e *echo.Echo) error {
 	// Init auth
 	authHandler := authHTTP.NewAuthHandlers(s.cfg, s.logger)
 
+	e.GET("/swagger/*", echoSwagger.WrapHandler)
 	v1 := e.Group("/api/v1")
 
 	health := v1.Group("/health")

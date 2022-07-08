@@ -1,0 +1,15 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Golang REST API",
+        "title": "Go Learn REST API",
+        "contact": {
+            "name": "Duc PX",
+            "url": "https://github.com/ducpx",
+            "email": "ducpx96@gmail.com"
+        },
+        "version": "1.0"
+    },
+    "basePath": "/api/v1",
+    "paths": {}
+}

@@ -16,6 +16,13 @@ import (
 	"github.com/ducpx/rest-api/pkg/utils"
 )
 
+// @title Go Learn REST API
+// @version 1.0
+// @description Golang REST API
+// @contact.name Duc PX
+// @contact.url https://github.com/ducpx
+// @contact.email ducpx96@gmail.com
+// @BasePath /api/v1
 func main() {
 	log.Println("Starting api server")
 
