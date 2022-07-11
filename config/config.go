@@ -9,10 +9,12 @@ import (
 )
 
 type Config struct {
-	Server  ServerConfig
-	Metrics Metrics
-	Logger  Logger
-	Jaeger  Jaeger
+	Server   ServerConfig
+	Metrics  Metrics
+	Logger   Logger
+	Jaeger   Jaeger
+	Redis    RedisConfig
+	Postgres PostgresConfig
 }
 
 // Server config
@@ -46,6 +48,28 @@ type Jaeger struct {
 	Host        string
 	ServiceName string
 	LogSpans    bool
+}
+
+type RedisConfig struct {
+	RedisAddr      string
+	RedisPassword  string
+	RedisDB        string
+	RedisDefaultdb string
+	MinIdleConns   int
+	PoolSize       int
+	PoolTimeout    int
+	Password       string
+	DB             int
+}
+
+type PostgresConfig struct {
+	PostgresqlHost     string
+	PostgresqlPort     string
+	PostgresqlUser     string
+	PostgresqlPassword string
+	PostgresqlDbname   string
+	PostgresqlSSLMode  bool
+	PgDriver           string
 }
 
 // Load config file from given path

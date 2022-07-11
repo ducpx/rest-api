@@ -12,6 +12,7 @@ import (
 
 	"github.com/ducpx/rest-api/config"
 	"github.com/ducpx/rest-api/internal/server"
+	"github.com/ducpx/rest-api/pkg/db"
 	"github.com/ducpx/rest-api/pkg/logger"
 	"github.com/ducpx/rest-api/pkg/utils"
 )
@@ -61,7 +62,18 @@ func main() {
 	defer closer.Close()
 	appLogger.Info("Opentracing connected")
 
-	s := server.NewServer(cfg, appLogger)
+	psqlDB, err := db.NewPsqlDB(cfg)
+	if err != nil {
+		appLogger.Fatalf("Postgresql init: %s", err)
+	} else {
+		appLogger.Infof("Postgres connected, Status: %#v", psqlDB.Stats())
+	}
+	defer psqlDB.Close()
+
+	redisClient := db.NewRedisClient(cfg)
+	defer redisClient.Close()
+	appLogger.Info("Redis connected")
+	s := server.NewServer(cfg, psqlDB, redisClient, appLogger)
 
 	if err := s.Run(); err != nil {
 		log.Fatal(err)

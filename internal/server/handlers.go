@@ -5,6 +5,8 @@ import (
 
 	_ "github.com/ducpx/rest-api/docs"
 	authHTTP "github.com/ducpx/rest-api/internal/auth/delivery/http"
+	"github.com/ducpx/rest-api/internal/auth/repository"
+	authUseCase "github.com/ducpx/rest-api/internal/auth/usecase"
 	appMiddleware "github.com/ducpx/rest-api/internal/middleware"
 	"github.com/ducpx/rest-api/pkg/metric"
 	"github.com/ducpx/rest-api/pkg/utils"
@@ -29,7 +31,9 @@ func (s *Server) MapHandlers(e *echo.Echo) error {
 	e.Use(mw.MetricsMiddleware(metr))
 
 	// Init auth
-	authHandler := authHTTP.NewAuthHandlers(s.cfg, s.logger)
+	authRepo := repository.NewAuthRepo(s.db, s.logger)
+	authUC := authUseCase.NewAuthUC(s.cfg, authRepo, s.logger)
+	authHandler := authHTTP.NewAuthHandlers(s.cfg, authUC, s.logger)
 
 	e.GET("/swagger/*", echoSwagger.WrapHandler)
 	v1 := e.Group("/api/v1")

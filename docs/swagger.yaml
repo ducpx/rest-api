@@ -1,4 +1,12 @@
 basePath: /api/v1
+definitions:
+  models.User:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    type: object
 info:
   contact:
     email: ducpx96@gmail.com
@@ -7,5 +15,20 @@ info:
   description: Golang REST API
   title: Go Learn REST API
   version: "1.0"
-paths: {}
+paths:
+  /auth/register:
+    post:
+      consumes:
+      - application/json
+      description: Register a new user, returns user and token
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.User'
+      summary: Register a new user
+      tags:
+      - auth
 swagger: "2.0"

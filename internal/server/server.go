@@ -10,6 +10,8 @@ import (
 
 	"github.com/ducpx/rest-api/config"
 	"github.com/ducpx/rest-api/pkg/logger"
+	"github.com/go-redis/redis/v8"
+	"github.com/jmoiron/sqlx"
 
 	"github.com/labstack/echo/v4"
 )
@@ -20,16 +22,20 @@ const (
 )
 
 type Server struct {
-	echo   *echo.Echo
-	cfg    *config.Config
-	logger logger.Logger
+	echo        *echo.Echo
+	cfg         *config.Config
+	db          *sqlx.DB
+	redisClient *redis.Client
+	logger      logger.Logger
 }
 
-func NewServer(cfg *config.Config, logger logger.Logger) *Server {
+func NewServer(cfg *config.Config, db *sqlx.DB, redisClient *redis.Client, logger logger.Logger) *Server {
 	return &Server{
-		echo:   echo.New(),
-		cfg:    cfg,
-		logger: logger,
+		echo:        echo.New(),
+		cfg:         cfg,
+		db:          db,
+		redisClient: redisClient,
+		logger:      logger,
 	}
 }
 

@@ -4,6 +4,7 @@ import (
 	"context"
 	"time"
 
+	"github.com/ducpx/rest-api/pkg/logger"
 	"github.com/labstack/echo/v4"
 )
 
@@ -33,4 +34,21 @@ func GetConfigPath(configPath string) string {
 		return "./config/config-docker"
 	}
 	return "./config/config-local"
+}
+
+// Read request body and validate
+func ReadRequest(ctx echo.Context, request interface{}) error {
+	if err := ctx.Bind(request); err != nil {
+		return err
+	}
+
+	return ValidateStructCtx(ctx.Request().Context(), request)
+}
+
+// LogResponseError when handler get an error
+func LogResponseError(ctx echo.Context, log logger.Logger, err error) {
+	log.Errorf(
+		"ErrorResponseWithLog, RequestID: %s, Error: %v",
+		GetRequestID(ctx), err,
+	)
 }
